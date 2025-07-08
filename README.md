@@ -7,6 +7,7 @@ Consta de tres aplicaciones web mínimas que se comunican mediante HTTP:
 - **OrderService** registra pedidos y consulta el servicio de productos para obtener información de cada producto.
 - **ShippingService** permite registrar envíos y consulta el servicio de pedidos para mostrar los detalles del pedido enviado.
 
+
 ## Ejecución
 
 Para ejecutar cada microservicio utilice los siguientes comandos en terminales
