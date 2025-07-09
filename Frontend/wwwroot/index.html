@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Demo Microservicios</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+</head>
+<body class="container py-4">
+    <h1 class="mb-4">Demo Microservicios</h1>
+    <div class="row">
+        <div class="col">
+            <h2>Productos</h2>
+            <form id="product-form" class="mb-3">
+                <div class="input-group">
+                    <input type="text" id="product-name" class="form-control" placeholder="Nombre" required>
+                    <button class="btn btn-primary" type="submit">Agregar</button>
+                </div>
+            </form>
+            <ul id="product-list" class="list-group"></ul>
+        </div>
+        <div class="col">
+            <h2>Pedidos</h2>
+            <form id="order-form" class="mb-3">
+                <div class="input-group">
+                    <input type="number" id="order-product-id" class="form-control" placeholder="Id producto" required>
+                    <input type="number" id="order-qty" class="form-control" placeholder="Cantidad" required>
+                    <button class="btn btn-primary" type="submit">Agregar</button>
+                </div>
+            </form>
+            <ul id="order-list" class="list-group"></ul>
+        </div>
+        <div class="col">
+            <h2>Envíos</h2>
+            <form id="shipment-form" class="mb-3">
+                <div class="input-group">
+                    <input type="number" id="shipment-order-id" class="form-control" placeholder="Id pedido" required>
+                    <button class="btn btn-primary" type="submit">Agregar</button>
+                </div>
+            </form>
+            <ul id="shipment-list" class="list-group"></ul>
+        </div>
+    </div>
+
+<script>
+const productList = document.getElementById('product-list');
+const orderList = document.getElementById('order-list');
+const shipmentList = document.getElementById('shipment-list');
+
+function refreshProducts() {
+    fetch('http://localhost:5000/products')
+        .then(r => r.json())
+        .then(data => {
+            productList.innerHTML = '';
+            data.forEach(p => {
+                const li = document.createElement('li');
+                li.className = 'list-group-item';
+                li.textContent = `${p.id}: ${p.name}`;
+                productList.appendChild(li);
+            });
+        });
+}
+
+function refreshOrders() {
+    fetch('http://localhost:5001/orders')
+        .then(r => r.json())
+        .then(data => {
+            orderList.innerHTML = '';
+            data.forEach(o => {
+                const li = document.createElement('li');
+                li.className = 'list-group-item';
+                li.textContent = `${o.id}: ${o.product} x ${o.quantity}`;
+                orderList.appendChild(li);
+            });
+        });
+}
+
+function refreshShipments() {
+    fetch('http://localhost:5002/shipments')
+        .then(r => r.json())
+        .then(data => {
+            shipmentList.innerHTML = '';
+            data.forEach(s => {
+                const li = document.createElement('li');
+                li.className = 'list-group-item';
+                const order = s.order;
+                const details = order ? `${order.product} x ${order.quantity}` : s.orderId;
+                li.textContent = `${s.id}: Pedido ${details} enviado ${s.shipDate}`;
+                shipmentList.appendChild(li);
+            });
+        });
+}
+
+// forms
+
+document.getElementById('product-form').addEventListener('submit', e => {
+    e.preventDefault();
+    const name = document.getElementById('product-name').value;
+    fetch('http://localhost:5000/products', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ name })
+    }).then(() => {
+        document.getElementById('product-name').value = '';
+        refreshProducts();
+    });
+});
+
+document.getElementById('order-form').addEventListener('submit', e => {
+    e.preventDefault();
+    const productId = +document.getElementById('order-product-id').value;
+    const quantity = +document.getElementById('order-qty').value;
+    fetch('http://localhost:5001/orders', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ productId, quantity })
+    }).then(() => {
+        document.getElementById('order-product-id').value = '';
+        document.getElementById('order-qty').value = '';
+        refreshOrders();
+    });
+});
+
+document.getElementById('shipment-form').addEventListener('submit', e => {
+    e.preventDefault();
+    const orderId = +document.getElementById('shipment-order-id').value;
+    fetch('http://localhost:5002/shipments', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ orderId })
+    }).then(() => {
+        document.getElementById('shipment-order-id').value = '';
+        refreshShipments();
+    });
+});
+
+refreshProducts();
+refreshOrders();
+refreshShipments();
+</script>
+</body>
+</html>
