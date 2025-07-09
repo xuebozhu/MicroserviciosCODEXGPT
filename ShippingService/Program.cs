@@ -7,8 +7,14 @@ builder.Services.AddHttpClient("orders", c =>
 {
     c.BaseAddress = new Uri("http://localhost:5001");
 });
+builder.Services.AddCors(options =>
+{
+    options.AddDefaultPolicy(policy =>
+        policy.AllowAnyOrigin().AllowAnyMethod().AllowAnyHeader());
+});
 
 var app = builder.Build();
+app.UseCors();
 
 var shipments = new List<Shipment>();
 

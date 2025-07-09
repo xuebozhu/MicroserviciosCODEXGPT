@@ -9,6 +9,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OrderService", "OrderServic
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ShippingService", "ShippingService\ShippingService.csproj", "{0C45D035-BA93-408A-A658-203915561FDF}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Frontend", "Frontend\Frontend.csproj", "{662709C0-AE2C-4B42-B94F-9F531FACD581}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -28,7 +30,11 @@ Global
 		{6808CD79-03F1-42F7-8137-BE8B14451482}.Release|Any CPU.Build.0 = Release|Any CPU
 		{0C45D035-BA93-408A-A658-203915561FDF}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{0C45D035-BA93-408A-A658-203915561FDF}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{0C45D035-BA93-408A-A658-203915561FDF}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{0C45D035-BA93-408A-A658-203915561FDF}.Release|Any CPU.Build.0 = Release|Any CPU
-	EndGlobalSection
+                {0C45D035-BA93-408A-A658-203915561FDF}.Release|Any CPU.ActiveCfg = Release|Any CPU
+                {0C45D035-BA93-408A-A658-203915561FDF}.Release|Any CPU.Build.0 = Release|Any CPU
+                {662709C0-AE2C-4B42-B94F-9F531FACD581}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+                {662709C0-AE2C-4B42-B94F-9F531FACD581}.Debug|Any CPU.Build.0 = Debug|Any CPU
+                {662709C0-AE2C-4B42-B94F-9F531FACD581}.Release|Any CPU.ActiveCfg = Release|Any CPU
+                {662709C0-AE2C-4B42-B94F-9F531FACD581}.Release|Any CPU.Build.0 = Release|Any CPU
+        EndGlobalSection
 EndGlobal
